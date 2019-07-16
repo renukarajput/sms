@@ -1,13 +1,18 @@
 package com.management.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Table(name= "userSkillSet")
+@Table(name= "user_skills")
 @Entity
 public class UserSkillSet {
-    Integer uId;
-    Integer sId;
+    @Id
+    @Column(name = "UserId")
+    @NotNull
+    private Integer uId;
+
+    @Column(name = "SkillId")
+    private Integer sId;
 
     public Integer getuId() {
         return uId;

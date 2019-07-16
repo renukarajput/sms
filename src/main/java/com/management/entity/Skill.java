@@ -1,13 +1,17 @@
 package com.management.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name="skillSet")
+@Table(name="skills")
 @Entity
 public class Skill {
-    Integer id;
-    String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Integer id;
+
+    @Column(unique = true, name = "Name")
+    private String name;
 
     public Integer getId() {
         return id;
