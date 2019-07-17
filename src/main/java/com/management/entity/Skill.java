@@ -1,16 +1,17 @@
 package com.management.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Table(name="skills")
 @Entity
-public class Skill {
+@Table(name="skills")
+public class Skill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id", unique = true)
     private Integer id;
 
-    @Column(unique = true, name = "Name")
+    @Column(name="Name", unique = true, length = 512)
     private String name;
 
     public Integer getId() {

@@ -1,12 +1,13 @@
 package com.management.service;
 
 import com.management.entity.Skill;
-import com.management.exception.SkillException;
 import com.management.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
+
+import java.sql.SQLDataException;
+import java.util.Objects;
 
 @Service
 public class SkillService {
@@ -14,21 +15,20 @@ public class SkillService {
     @Autowired
     SkillRepository skillRepository;
 
-    /*public SkillService(SkillRepository skillRepository) {
-        this.skillRepository = skillRepository;
-    }*/
+    public Skill add(Skill skill) {
 
-    //1,java
-    public void add(Skill skill) {
-        if (skill != null)
-            this.skillRepository.save(skill);
-
-        Skill bySkillId = findBySkillId(skill.getId());
-        System.out.println("******* "+ bySkillId.getId()+ "***** "+ bySkillId.getName());
+        try {
+            if (skill != null)
+               return this.skillRepository.save(skill);
+            else
+                throw new SQLDataException();
+        } catch (SQLDataException e) {
+            System.out.println("**** Duplicate record being inserted **** "+ e);
+        }
+        return null;
     }
 
-    public Skill findBySkillId(Integer id) {
-        return skillRepository.findById(id).orElseThrow(() ->
-                new SkillException(HttpStatus.NOT_FOUND, "Resource Not Found"));
+    public Skill findByName(String name) {
+        return skillRepository.findByName(name);
     }
 }

@@ -11,10 +11,6 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    /*public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }*/
-
     public void add(User user) {
         if (user != null)
             userRepository.save(user);
