@@ -1,26 +1,41 @@
 package com.management.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Table(name = "users")
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
-    private Integer id;
+    @Column(name = "userId")
+    private Integer userId;
 
-    @Column(name = "FirstName")
     private String firstName;
 
-    @Column(name = "LastName")
     private String lastName;
 
-    @Column(name = "Experience")
     private Integer exp;
 
-    @Column(name = "Skill")
     private String skill;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "skills_users",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "skillId"))
+    private List<Skill> skills = new ArrayList<>();
+
+    public User(Integer userId, String firstName, String lastName, Integer exp,
+                String skill, List<Skill> skills) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.exp = exp;
+        this.skill = skill;
+        this.skills = skills;
+        this.skills.forEach(x -> x.getUsers().add(this));
+    }
 
     public String getSkill() {
         return skill;
@@ -30,12 +45,12 @@ public class User {
         this.skill = skill;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -60,5 +75,13 @@ public class User {
 
     public void setExp(Integer exp) {
         this.exp = exp;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
 }

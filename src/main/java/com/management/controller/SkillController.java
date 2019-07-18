@@ -16,9 +16,6 @@ public class SkillController {
     @Autowired
     SkillService skillService;
 
-    @Autowired
-    SkillRepository skillRepository;
-
     @GetMapping("status")
     public String test() {
         return "up";
@@ -35,12 +32,12 @@ public class SkillController {
     @GetMapping("{skill}")
     public ResponseEntity<?> getBySkill(@RequestParam String skill) {
         Skill byName = skillService.findByName(skill);
-        System.out.println("Skill found - "+ byName.getId()+ " - "+ byName.getName());
+        System.out.println("Skill found - "+ byName.getSkillId()+ " - "+ byName.getName());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping
     public List<Skill> getAllSkills() {
-      return skillRepository.findAll();
+      return skillService.findAll();
     }
 }

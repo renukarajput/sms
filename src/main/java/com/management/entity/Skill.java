@@ -1,25 +1,29 @@
 package com.management.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="skills")
-public class Skill implements Serializable {
+public class Skill  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true)
-    private Integer id;
+    @Column(name = "skillId", unique = true)
+    private Integer skillId;
 
-    @Column(name="Name", unique = true, length = 512)
+    @Column(unique = true, length = 512)
     private String name;
 
-    public Integer getId() {
-        return id;
+    @ManyToMany(mappedBy = "skills")
+    private List<User> users = new ArrayList<>();
+
+    public Integer getSkillId() {
+        return skillId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSkillId(Integer skillId) {
+        this.skillId = skillId;
     }
 
     public String getName() {
@@ -28,5 +32,13 @@ public class Skill implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
